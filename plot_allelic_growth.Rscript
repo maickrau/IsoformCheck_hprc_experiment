@@ -1,0 +1,6 @@
+library(ggplot2)
+data <- read.csv("allelic_growth.tsv", sep="\t")
+data_stacked <- data.frame(n_samples = rep(data$n_samples, 2), type=rep(c("Multiples", "Singletons"), each=nrow(data)), value=c(data$multiples, data$singletons))
+png("allelic_growth.png", width=1000)
+ggplot(data_stacked, aes(x=n_samples, y=value, fill=type)) + geom_bar(stat = "identity", position=position_stack(reverse=TRUE)) + xlab("samples") + ylab("count") + labs(fill="")
+dev.off()
